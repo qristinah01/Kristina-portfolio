@@ -1,8 +1,8 @@
-import type { Variants, Transition } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 // Global timing
-export const easeOutQuart: Transition["ease"] = [0.25, 1, 0.5, 1];
-export const easeOutExpo: Transition["ease"] = [0.16, 1, 0.3, 1];
+export const easeOutQuart = [0.25, 1, 0.5, 1] as const;
+export const easeOutExpo = [0.16, 1, 0.3, 1] as const;
 
 // ---- Fade-up reveal ----
 export const fadeUp: Variants = {
