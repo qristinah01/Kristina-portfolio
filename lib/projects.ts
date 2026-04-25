@@ -11,6 +11,13 @@ export type Project = {
   cardAccent?: string;  // optional accent color
   screens?: string;     // e.g. "38 screens"
   featured?: boolean;
+  heroImage?: string;   // path to hero image in /public
+  caseImages?: {
+    flows?: string;
+    keyScreens?: string;
+    detail?: string;
+    tokens?: string;
+  };
   // Case study content
   hero: {
     problem: string;
@@ -41,6 +48,13 @@ export const projects: Project[] = [
     featured: true,
     cardSize: "featured",
     cardBg: "bg-accent-deepblue",
+    heroImage: "/images/synon-hero.png",
+    caseImages: {
+      flows: "/images/syon-visual.png",
+      keyScreens: "/images/synon-key.png",
+      detail: "/images/synon-detail-componenet.png",
+      tokens: "/images/synon-token.png",
+    },
     shortBody:
       "A fragmented iGaming platform turned into a consistent product system — one grid, one voice, 38 production-ready screens across sportsbook, casino, wallet, and account.",
     hero: {
@@ -95,6 +109,13 @@ export const projects: Project[] = [
     screens: "10 sections",
     cardSize: "large",
     cardBg: "bg-paper-sand",
+    heroImage: "/images/halo-hero2.png",
+    caseImages: {
+      flows: "/images/halo-visual.png",
+      keyScreens: "/images/halo-hero2.png",
+      detail: "/images/halo-details.png",
+      tokens: "/images/halo-tokens.png",
+    },
     shortBody:
       "A premium audio brand rebuilt around meaning, not aesthetics — repositioned from a category to a customer, with the site restructured around their three questions.",
     hero: {
@@ -148,6 +169,13 @@ export const projects: Project[] = [
     screens: "14 screens",
     cardSize: "large",
     cardBg: "bg-paper-cream",
+    heroImage: "/images/safeguest-hero.png",
+    caseImages: {
+      flows: "/images/safeguestflow.png",
+      keyScreens: "/images/safegueastkey.png",
+      detail: "/images/safegueastdetail.png",
+      tokens: "/images/safe-guest-tokens.png",
+    },
     shortBody:
       "A digital concierge for short-term rental hosts and guests — one calm interface replacing text threads, PDF house rules, and 11pm WiFi-password messages.",
     hero: {
@@ -201,6 +229,13 @@ export const projects: Project[] = [
     screens: "Shipped",
     cardSize: "large",
     cardBg: "bg-accent-purple",
+    heroImage: "/images/bet-pilot-hero.png",
+    caseImages: {
+      flows: "/images/bet-pilot-flows.png",
+      keyScreens: "/images/bet-pilot-key-screen.png",
+      detail: "/images/betpilot-detail.png",
+      tokens: "/images/bet-pilot-token.png",
+    },
     shortBody:
       "A data-heavy decision interface designed to reduce noise and improve decision speed — not a dashboard, a place to scan, compare, and act on complex odds data.",
     hero: {
@@ -254,6 +289,13 @@ export const projects: Project[] = [
     screens: "Shipped",
     cardSize: "large",
     cardBg: "bg-accent-purple",
+    heroImage: "/images/tgl-hero.png",
+    caseImages: {
+      flows: "/images/tgl-visual-flows.png",
+      keyScreens: "/images/tgl-key-visual.png",
+      detail: "/images/tg-details.png",
+      tokens: "/images/tgl-tokens.png",
+    },
     shortBody:
       "A pre-launch learning platform built for two audiences at once — rigorous enough that parents trust it, warm enough that kids open it twice. Conversion-aware from the first scroll.",
     hero: {

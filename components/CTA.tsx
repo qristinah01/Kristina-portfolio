@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "./Reveal";
+import { fadeLeft, scaleUp } from "@/lib/motion";
 
 export function CTA() {
   const openChatOrEmail = () => {
@@ -18,12 +19,12 @@ export function CTA() {
       className="bg-ink text-text-onDark section-rhythm relative overflow-hidden"
     >
       <div className="container-page">
-        <Reveal className="mb-6">
+        <Reveal variant={fadeLeft} className="mb-6">
           <span className="eyebrow text-text-onDarkDim">06 — Let's Talk</span>
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-12 md:gap-16 items-end">
-          <Reveal delay={0.05}>
+          <Reveal variant={scaleUp} delay={0.05}>
             <h2 className="type-display-xl text-text-onDark">
               Have a product that
               <br />

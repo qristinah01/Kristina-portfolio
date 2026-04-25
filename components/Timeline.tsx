@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "./Reveal";
+import { fadeLeft, fadeRight } from "@/lib/motion";
 
 const phases = [
   {
@@ -33,7 +34,7 @@ export function Timeline() {
   return (
     <section id="about" className="container-page section-rhythm">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-14 md:mb-20">
-        <Reveal className="flex flex-col gap-3">
+        <Reveal variant={fadeLeft} className="flex flex-col gap-3">
           <span className="eyebrow">03 — The Journey</span>
           <h2 className="type-display-lg">
             From agency bench
@@ -41,7 +42,7 @@ export function Timeline() {
             <span className="italic font-light">to senior practice.</span>
           </h2>
         </Reveal>
-        <Reveal delay={0.1} className="flex md:items-end">
+        <Reveal variant={fadeRight} delay={0.1} className="flex md:items-end">
           <p className="type-lead text-text-secondary max-w-[460px]">
             Five years of product design, iterating from iGaming operator UX
             into independent client work.
@@ -52,7 +53,7 @@ export function Timeline() {
       {/* Timeline rail */}
       <div className="relative">
         {/* Horizontal line (desktop) */}
-        <div className="hidden md:block absolute top-[56px] left-0 right-0 h-px bg-line" />
+        <div className="hidden md:block absolute top-[56px] left-0 right-0 h-px bg-line mt-[-12px]" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
           {phases.map((p, i) => (

@@ -36,7 +36,7 @@ export function Footer() {
             <div className="text-body-sm text-text-onDarkDim leading-relaxed">
               Kristina Hakobyan
               <br />
-              Senior Product Designer
+              Product Designer
               <br />
               Yerevan — remote worldwide
             </div>

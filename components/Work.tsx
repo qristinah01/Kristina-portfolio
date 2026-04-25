@@ -1,10 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Reveal } from "./Reveal";
 import { projects, type Project } from "@/lib/projects";
-import { easeOutQuart, viewportOnce } from "@/lib/motion";
+import { easeOutQuart, viewportOnce, fadeLeft, fadeRight, scaleUp, slideFromLeft, slideFromRight } from "@/lib/motion";
 
 export function Work() {
   const featured = projects.find((p) => p.featured) || projects[0];
@@ -17,7 +18,7 @@ export function Work() {
     >
       {/* Header row */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-14 md:mb-20">
-        <Reveal className="flex flex-col gap-3">
+        <Reveal variant={fadeLeft} className="flex flex-col gap-3">
           <span className="eyebrow">02 — Selected Work</span>
           <h2 className="type-display-lg">
             Five projects,
@@ -25,7 +26,7 @@ export function Work() {
             <span className="italic font-light">five stories.</span>
           </h2>
         </Reveal>
-        <Reveal delay={0.1} className="flex md:items-end">
+        <Reveal variant={fadeRight} delay={0.1} className="flex md:items-end">
           <p className="type-lead text-text-secondary max-w-[460px]">
             Each case study focuses on a problem, not a visual style. iGaming
             platform, editorial e-commerce, SaaS concept, case study writing,
@@ -35,14 +36,14 @@ export function Work() {
       </div>
 
       {/* Featured card */}
-      <Reveal className="mb-8 md:mb-10">
+      <Reveal variant={slideFromLeft} repeat className="mb-8 md:mb-10">
         <FeaturedCard project={featured} />
       </Reveal>
 
       {/* Grid of 4 remaining */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {rest.map((p, i) => (
-          <Reveal key={p.slug} delay={i * 0.08}>
+          <Reveal key={p.slug} variant={i % 2 === 0 ? slideFromLeft : slideFromRight} repeat>
             <ProjectCard project={p} />
           </Reveal>
         ))}
@@ -66,19 +67,15 @@ function FeaturedCard({ project }: { project: Project }) {
         className="relative overflow-hidden rounded-2xl"
       >
         {/* Visual */}
-        <div className={`${project.cardBg} aspect-[16/9] flex items-center justify-center relative`}>
-          <span className="meta-label absolute top-6 left-6 text-text-onDarkDim">
-            ★ Featured
-          </span>
-          <span className="meta-label absolute top-6 right-6 text-text-onDarkDim">
-            {project.screens}
-          </span>
-          <span className="absolute top-6 right-24 meta-label text-text-onDarkDim">
-            {project.number}
-          </span>
-          <h3 className="font-display text-4xl md:text-6xl xl:text-7xl tracking-[0.08em] text-text-onDark/90">
-            {project.title.toUpperCase()}
-          </h3>
+        <div className="aspect-[16/9] relative overflow-hidden">
+          <Image
+            src={project.heroImage!}
+            alt={project.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 1200px"
+            priority
+          />
         </div>
 
         {/* Info row below */}
@@ -118,22 +115,22 @@ function ProjectCard({ project }: { project: Project }) {
           },
         }}
       >
-        <div
-          className={`${project.cardBg} aspect-[16/10] rounded-2xl flex items-center justify-center relative overflow-hidden`}
-        >
-          <span className={`absolute top-5 left-5 meta-label ${isDark ? "text-text-onDarkDim" : ""}`}>
-            {project.number}
-          </span>
-          <span className={`absolute top-5 right-5 meta-label ${isDark ? "text-text-onDarkDim" : ""}`}>
-            {project.tag}
-          </span>
-          <h4
-            className={`font-display text-3xl md:text-4xl xl:text-5xl tracking-[0.04em] ${
-              isDark ? "text-text-onDark/85" : "text-text-primary/90"
-            }`}
-          >
-            {project.title.toUpperCase()}
-          </h4>
+        <div className="aspect-[16/10] rounded-2xl relative overflow-hidden">
+          {project.heroImage ? (
+            <Image
+              src={project.heroImage}
+              alt={project.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 600px"
+            />
+          ) : (
+            <div className={`${project.cardBg} w-full h-full flex items-center justify-center`}>
+              <h4 className="font-display text-3xl md:text-4xl xl:text-5xl tracking-[0.04em] text-text-primary/90">
+                {project.title.toUpperCase()}
+              </h4>
+            </div>
+          )}
         </div>
 
         <div className="mt-5 flex flex-col gap-2">

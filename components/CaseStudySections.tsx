@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Reveal } from "./Reveal";
-import { stagger, fadeUp, viewportOnce } from "@/lib/motion";
+import { stagger, fadeUp, viewportOnce, slideFromLeft, slideFromRight } from "@/lib/motion";
 import type { Project } from "@/lib/projects";
 
 export function CaseStudySections({ project }: { project: Project }) {
@@ -22,13 +23,23 @@ export function CaseStudySections({ project }: { project: Project }) {
         </p>
       </Section>
 
-      {/* === Visual placeholder 1 === */}
-      <Reveal className="container-page mt-6">
-        <div className="bg-paper-sand rounded-2xl aspect-[16/9] flex items-center justify-center relative overflow-hidden">
-          <span className="meta-label absolute top-6 left-6">
-            Visual · Process / Flows
-          </span>
-          <span className="meta-label">IMG PLACEHOLDER · 1200×675</span>
+      {/* === Visual · Flows === */}
+      <Reveal variant={slideFromLeft} repeat className="container-page mt-6">
+        <div className="rounded-[6px] overflow-hidden">
+          {project.caseImages?.flows ? (
+            <Image
+              src={project.caseImages.flows}
+              alt={`${project.title} — process and flows`}
+              width={1200}
+              height={675}
+              className="w-full h-auto"
+              sizes="(max-width: 768px) 100vw, 1200px"
+            />
+          ) : (
+            <div className="bg-paper-sand aspect-[16/9] flex items-center justify-center">
+              <span className="meta-label">IMG PLACEHOLDER · 1200×675</span>
+            </div>
+          )}
         </div>
       </Reveal>
 
@@ -67,13 +78,23 @@ export function CaseStudySections({ project }: { project: Project }) {
         </motion.div>
       </section>
 
-      {/* === Visual placeholder 2 (wide) === */}
-      <Reveal className="container-page">
-        <div className="bg-paper-sand rounded-2xl aspect-[16/8] flex items-center justify-center relative overflow-hidden">
-          <span className="meta-label absolute top-6 left-6">
-            Visual · Key screens
-          </span>
-          <span className="meta-label">IMG PLACEHOLDER · 1200×600</span>
+      {/* === Visual · Key screens === */}
+      <Reveal variant={slideFromRight} repeat className="container-page">
+        <div className="rounded-[6px] overflow-hidden">
+          {project.caseImages?.keyScreens ? (
+            <Image
+              src={project.caseImages.keyScreens}
+              alt={`${project.title} — key screens`}
+              width={1200}
+              height={600}
+              className="w-full h-auto"
+              sizes="(max-width: 768px) 100vw, 1200px"
+            />
+          ) : (
+            <div className="bg-paper-sand aspect-[16/8] flex items-center justify-center">
+              <span className="meta-label">IMG PLACEHOLDER · 1200×600</span>
+            </div>
+          )}
         </div>
       </Reveal>
 
@@ -104,22 +125,40 @@ export function CaseStudySections({ project }: { project: Project }) {
         </div>
       </section>
 
-      {/* === Visual placeholder 3 (two-up) === */}
+      {/* === Visual · Detail + Tokens (two-up) === */}
       <div className="container-page grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-        <Reveal>
-          <div className="bg-paper-sand rounded-2xl aspect-[4/3] flex items-center justify-center relative overflow-hidden">
-            <span className="meta-label absolute top-6 left-6">
-              Detail · Component
-            </span>
-            <span className="meta-label">IMG · 580×435</span>
+        <Reveal variant={slideFromLeft} repeat>
+          <div className="rounded-[6px] overflow-hidden h-[390px] relative">
+            {project.caseImages?.detail ? (
+              <Image
+                src={project.caseImages.detail}
+                alt={`${project.title} — detail`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 600px"
+              />
+            ) : (
+              <div className="bg-paper-sand w-full h-full flex items-center justify-center">
+                <span className="meta-label">IMG · 580×435</span>
+              </div>
+            )}
           </div>
         </Reveal>
-        <Reveal delay={0.1}>
-          <div className="bg-paper-sand rounded-2xl aspect-[4/3] flex items-center justify-center relative overflow-hidden">
-            <span className="meta-label absolute top-6 left-6">
-              Detail · Tokens
-            </span>
-            <span className="meta-label">IMG · 580×435</span>
+        <Reveal variant={slideFromRight} repeat delay={0.1}>
+          <div className="rounded-[6px] overflow-hidden h-[390px] relative">
+            {project.caseImages?.tokens ? (
+              <Image
+                src={project.caseImages.tokens}
+                alt={`${project.title} — tokens`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 600px"
+              />
+            ) : (
+              <div className="bg-paper-sand w-full h-full flex items-center justify-center">
+                <span className="meta-label">IMG · 580×435</span>
+              </div>
+            )}
           </div>
         </Reveal>
       </div>

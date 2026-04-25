@@ -1,11 +1,12 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { wordStagger, wordFadeUp, easeOutExpo } from "@/lib/motion";
 
 const meta = [
   { label: "Based in", value: "Yerevan, Armenia" },
-  { label: "Experience", value: "5+ years" },
+  { label: "Experience", value: "3+ years" },
   { label: "Languages", value: "Armenian · Russian · English" },
   { label: "Specializes in", value: "iGaming · SaaS · Education" },
   { label: "Currently", value: "Freelance — remote" },
@@ -13,6 +14,16 @@ const meta = [
 
 export function Hero() {
   const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
+  const avatarY = useTransform(scrollY, [0, 300], [0, -30]);
+  const avatarScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+  const avatarBorderRadius = useTransform(scrollY, [0, 300], [4, 140]);
+
+  const nameY = useTransform(scrollY, [0, 300], [0, -15]);
+  const nameOpacity = useTransform(scrollY, [0, 300], [1, 0.4]);
+  const roleX = useTransform(scrollY, [0, 300], [0, 20]);
+  const roleOpacity = useTransform(scrollY, [0, 300], [1, 0.4]);
+
   const anim = (delay: number) =>
     reduce
       ? {}
@@ -37,29 +48,58 @@ export function Hero() {
         </span>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-10 md:gap-16 items-start">
+      <div className="grid grid-cols-1 min-[900px]:grid-cols-[1fr_280px] gap-10 min-[900px]:gap-16 items-start">
         {/* Left: headline + body */}
         <div>
-          <motion.h1
-            variants={reduce ? undefined : wordStagger}
-            initial="hidden"
-            animate="show"
-            className="type-display-xl"
-          >
-            <motion.span
-              variants={reduce ? undefined : wordFadeUp}
-              className="block"
+          <div className="flex flex-row items-start gap-8">
+            <motion.div
+              {...anim(0.05)}
+              className="shrink-0 overflow-hidden"
+              style={reduce ? {} : {
+                y: avatarY,
+                scale: avatarScale,
+                borderRadius: avatarBorderRadius,
+              }}
             >
-              Kristina Hakobyan —
-            </motion.span>
-            <motion.span
-              variants={reduce ? undefined : wordFadeUp}
-              className="block italic font-light"
-              style={{ fontFamily: "var(--font-fraunces)" }}
+              <Image
+                src="/images/avatar.jpg"
+                alt="Kristina Hakobyan"
+                width={280}
+                height={280}
+                className="w-[120px] md:w-[280px] h-[120px] md:h-[280px] object-cover"
+                priority
+              />
+            </motion.div>
+            <motion.h1
+              variants={reduce ? undefined : wordStagger}
+              initial="hidden"
+              animate="show"
+              className="type-display-md"
             >
-              Senior Product Designer
-            </motion.span>
-          </motion.h1>
+              <motion.span
+                variants={reduce ? undefined : wordFadeUp}
+                className="block text-[1.4rem] md:text-5xl italic font-light leading-none"
+                style={reduce ? { fontFamily: "var(--font-fraunces)" } : {
+                  fontFamily: "var(--font-fraunces)",
+                  y: nameY,
+                  opacity: nameOpacity,
+                }}
+              >
+                Kristina Hakobyan
+              </motion.span>
+              <motion.span
+                variants={reduce ? undefined : wordFadeUp}
+                className="block text-lg md:text-3xl italic font-light mt-2 whitespace-nowrap"
+                style={reduce ? { fontFamily: "var(--font-fraunces)" } : {
+                  fontFamily: "var(--font-fraunces)",
+                  x: roleX,
+                  opacity: roleOpacity,
+                }}
+              >
+                Product Designer
+              </motion.span>
+            </motion.h1>
+          </div>
 
           <motion.p
             {...anim(0.25)}
@@ -78,17 +118,27 @@ export function Hero() {
               View selected work
               <span className="btn-link-arrow">↓</span>
             </a>
-            <a href="#cta" className="btn-ghost">
+            <button
+              onClick={() => {
+                const crisp = (window as unknown as { $crisp?: unknown[] }).$crisp;
+                if (crisp) {
+                  crisp.push(["do", "chat:open"]);
+                } else {
+                  window.location.href = "mailto:qristine.hakobyan.2000@gmail.com?subject=Project%20inquiry";
+                }
+              }}
+              className="btn-ghost"
+            >
               Let's talk
               <span className="btn-link-arrow">→</span>
-            </a>
+            </button>
           </motion.div>
         </div>
 
         {/* Right: meta grid */}
         <motion.div
           {...anim(0.15)}
-          className="grid grid-cols-2 md:grid-cols-1 gap-y-5 gap-x-6 md:border-l md:border-line md:pl-8 md:pt-2"
+          className="grid grid-cols-2 min-[900px]:grid-cols-1 gap-y-5 gap-x-6 min-[900px]:border-l min-[900px]:border-line min-[900px]:pl-8 min-[900px]:pt-2"
         >
           {meta.map((m) => (
             <div key={m.label} className="flex flex-col gap-1">
@@ -105,6 +155,7 @@ export function Hero() {
       >
         <span className="meta-label">Scroll to explore</span>
       </motion.div>
+
     </section>
   );
 }

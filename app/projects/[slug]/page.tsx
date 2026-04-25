@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
@@ -70,19 +71,28 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           </Reveal>
         </section>
 
-        {/* === Hero visual placeholder === */}
+        {/* === Hero visual === */}
         <Reveal>
-          <div className="container-page">
-            <div
-              className={`${project.cardBg} rounded-2xl aspect-[16/9] md:aspect-[16/8] flex items-center justify-center relative overflow-hidden grain`}
-            >
-              <span className="meta-label text-text-onDarkDim absolute top-6 left-6">
-                Hero visual
-              </span>
-              <h2 className="font-display text-5xl md:text-7xl xl:text-8xl tracking-[0.04em] text-text-onDark/40">
-                {project.title.toUpperCase()}
-              </h2>
-            </div>
+          <div>
+            {project.heroImage ? (
+              <Image
+                src={project.heroImage}
+                alt={project.title}
+                width={1920}
+                height={1080}
+                className="w-full h-auto object-contain"
+                sizes="100vw"
+                priority
+              />
+            ) : (
+              <div
+                className={`container-page ${project.cardBg} rounded-2xl aspect-[16/9] md:aspect-[16/8] flex items-center justify-center relative overflow-hidden grain`}
+              >
+                <h2 className="font-display text-5xl md:text-7xl xl:text-8xl tracking-[0.04em] text-text-onDark/40">
+                  {project.title.toUpperCase()}
+                </h2>
+              </div>
+            )}
           </div>
         </Reveal>
 

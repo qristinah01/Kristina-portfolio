@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Avatar } from "./Avatar";
 
 const links = [
   { label: "Work", href: "/#work" },

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Reveal } from "./Reveal";
-import { stagger, fadeUp, viewportOnce } from "@/lib/motion";
+import { stagger, fadeUp, fadeLeft, fadeRight, viewportOnce } from "@/lib/motion";
 
 const principles = [
   {
@@ -31,13 +31,13 @@ export function Approach() {
   return (
     <section id="approach" className="container-page section-rhythm">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-14 md:mb-20">
-        <Reveal className="flex flex-col gap-3">
+        <Reveal variant={fadeLeft} className="flex flex-col gap-3">
           <span className="eyebrow">04 — Approach</span>
           <h2 className="type-display-lg">
             How I actually <span className="italic font-light">work.</span>
           </h2>
         </Reveal>
-        <Reveal delay={0.1} className="flex md:items-end">
+        <Reveal variant={fadeRight} delay={0.1} className="flex md:items-end">
           <p className="type-lead text-text-secondary max-w-[460px]">
             No process diagram. Four principles that actually show up in every
             project I ship.

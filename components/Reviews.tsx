@@ -1,6 +1,7 @@
 "use client";
 
 import { Reveal } from "./Reveal";
+import { fadeLeft, fadeRight, scaleUp } from "@/lib/motion";
 
 const reviews = [
   {
@@ -23,13 +24,13 @@ export function Reviews() {
   return (
     <section id="reviews" className="container-page section-rhythm">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-14 md:mb-20">
-        <Reveal className="flex flex-col gap-3">
+        <Reveal variant={fadeLeft} className="flex flex-col gap-3">
           <span className="eyebrow">05 — Kind Words</span>
           <h2 className="type-display-lg">
             What clients <span className="italic font-light">say.</span>
           </h2>
         </Reveal>
-        <Reveal delay={0.1} className="flex md:items-end">
+        <Reveal variant={fadeRight} delay={0.1} className="flex md:items-end">
           <p className="type-lead text-text-secondary max-w-[460px]">
             Verified reviews from Upwork clients — real engagements, real money,
             real outcomes.
@@ -39,7 +40,7 @@ export function Reviews() {
 
       <div className="flex flex-col gap-6 md:gap-8">
         {/* Large review */}
-        <Reveal>
+        <Reveal variant={scaleUp}>
           <div className="bg-paper-cream border border-line rounded-2xl p-8 md:p-14 relative overflow-hidden">
             <span className="font-display text-8xl md:text-9xl text-text-tertiary/30 absolute top-4 left-6 md:top-6 md:left-10 leading-none select-none">
               &ldquo;

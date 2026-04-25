@@ -27,11 +27,11 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://kristina.design"),
-  title: "Kristina Hakobyan — Senior Product Designer",
+  title: "Kristina Hakobyan — Product Designer",
   description:
     "Multi-surface product design for iGaming, SaaS, and education. I design systems from first wireframe to developer handoff — built for real constraints, not showreels.",
   openGraph: {
-    title: "Kristina Hakobyan — Senior Product Designer",
+    title: "Kristina Hakobyan — Product Designer",
     description:
       "Multi-surface product design for iGaming, SaaS, and education.",
     type: "website",
