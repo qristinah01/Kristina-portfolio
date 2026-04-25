@@ -4,66 +4,63 @@ import { motion } from "framer-motion";
 import { Reveal } from "./Reveal";
 import { stagger, fadeUp, fadeLeft, fadeRight, viewportOnce } from "@/lib/motion";
 
-const principles = [
+const steps = [
   {
     n: "01",
-    title: "System, not screen.",
-    body: "Every card, input, and state gets a token. If it can't be reused, it shouldn't ship. Design systems aren't a deliverable — they're how I design.",
+    title: "Find the actual problem.",
+    body: "Most briefs describe symptoms. I audit what exists, talk to the people using it, and identify what's actually broken before opening any design tool.",
   },
   {
     n: "02",
-    title: "Constraint is the brief.",
-    body: "Real products have real limits — compliance rules, legacy data models, mobile carriers in MENA. I design inside those, not around them.",
+    title: "Build the structure first.",
+    body: "Tokens, grids, component logic — before any screen. If the system is right, screens assemble themselves. If it's wrong, every screen is a one-off.",
   },
   {
     n: "03",
-    title: "Write the decision trail.",
-    body: "Every case study answers why, not what. If I can't explain a design choice in two sentences, it's probably the wrong choice.",
-  },
-  {
-    n: "04",
-    title: "Ship, then iterate.",
-    body: "Nothing is precious. First version exists to be critiqued. Senior isn't about getting it right the first time — it's about knowing what to change on the third pass.",
+    title: "Ship what engineering can build.",
+    body: "Every design I hand off includes specs engineers can read without a meeting. No ambiguity, no guessing. The handoff document becomes the changelog.",
   },
 ];
 
 export function Approach() {
   return (
-    <section id="approach" className="container-page section-rhythm">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-14 md:mb-20">
+    <section id="approach" className="container-page py-24 md:py-32 xl:py-40">
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-16 md:mb-24">
         <Reveal variant={fadeLeft} className="flex flex-col gap-3">
           <span className="eyebrow">04 — Approach</span>
           <h2 className="type-display-lg">
-            How I actually <span className="italic font-light">work.</span>
+            Problem, structure,
+            <br />
+            <span className="italic font-light">then pixels.</span>
           </h2>
         </Reveal>
         <Reveal variant={fadeRight} delay={0.1} className="flex md:items-end">
           <p className="type-lead text-text-secondary max-w-[460px]">
-            No process diagram. Four principles that actually show up in every
-            project I ship.
+            Three steps. No framework diagrams, no post-it walls.
+            Just the work that makes products shippable.
           </p>
         </Reveal>
       </div>
 
       <motion.div
-        variants={stagger(0.1, 0.1)}
+        variants={stagger(0.1, 0.12)}
         initial="hidden"
         whileInView="show"
         viewport={viewportOnce}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
       >
-        {principles.map((p) => (
+        {steps.map((s) => (
           <motion.div
-            key={p.n}
+            key={s.n}
             variants={fadeUp}
-            className="bg-paper-cream rounded-2xl p-8 md:p-10 border border-line/70"
+            className="pt-8 border-t border-line"
           >
-            <span className="font-display text-body-sm text-text-tertiary mb-3 block">
-              {p.n}
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-tertiary block mb-5">
+              {s.n}
             </span>
-            <h3 className="type-display-md mb-4">{p.title}</h3>
-            <p className="text-body text-text-secondary max-w-[460px]">
-              {p.body}
+            <h3 className="type-display-sm mb-4">{s.title}</h3>
+            <p className="text-body text-text-secondary leading-relaxed max-w-[380px]">
+              {s.body}
             </p>
           </motion.div>
         ))}

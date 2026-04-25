@@ -22,7 +22,7 @@ const reviews = [
 
 export function Reviews() {
   return (
-    <section id="reviews" className="container-page section-rhythm">
+    <section id="reviews" className="container-page py-24 md:py-32 xl:py-40">
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-14 md:mb-20">
         <Reveal variant={fadeLeft} className="flex flex-col gap-3">
           <span className="eyebrow">05 — Kind Words</span>

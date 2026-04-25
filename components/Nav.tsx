@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Avatar } from "./Avatar";
 
 const links = [
-  { label: "Work", href: "/#work" },
+  { label: "Work", href: "/work" },
   { label: "About", href: "/#about" },
   { label: "Approach", href: "/#approach" },
   { label: "Contact", href: "/#cta" },

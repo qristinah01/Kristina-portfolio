@@ -16,7 +16,7 @@ export function CTA() {
   return (
     <section
       id="cta"
-      className="bg-ink text-text-onDark section-rhythm relative overflow-hidden"
+      className="bg-ink text-text-onDark py-24 md:py-32 xl:py-40 relative overflow-hidden"
     >
       <div className="container-page">
         <Reveal variant={fadeLeft} className="mb-6">
@@ -77,7 +77,7 @@ export function CTA() {
               onClick={openChatOrEmail}
               className="inline-flex items-center gap-2 rounded-full bg-paper text-ink px-5 py-3 text-body-sm font-medium transition-all duration-300 ease-out-quart hover:bg-white hover:-translate-y-[1px]"
             >
-              Let's talk
+              Let's chat
               <span>→</span>
             </button>
             <a

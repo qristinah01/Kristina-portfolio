@@ -7,6 +7,8 @@ import { stagger, fadeUp, viewportOnce, slideFromLeft, slideFromRight } from "@/
 import type { Project } from "@/lib/projects";
 
 export function CaseStudySections({ project }: { project: Project }) {
+  const isSynon = project.slug === "synon";
+
   return (
     <>
       {/* === Problem === */}
@@ -15,6 +17,18 @@ export function CaseStudySections({ project }: { project: Project }) {
           {project.problem}
         </p>
       </Section>
+
+      {/* Synon: short problem framing */}
+      {isSynon && (
+        <Reveal className="container-page -mt-8 mb-4">
+          <p className="text-[14px] text-text-tertiary max-w-[480px] leading-[1.7] italic"
+            style={{ fontFamily: "var(--font-fraunces)" }}
+          >
+            The product felt fragmented across dashboards.
+            Multiple UI patterns competed for attention, making the interface harder to use with every new feature.
+          </p>
+        </Reveal>
+      )}
 
       {/* === Approach === */}
       <Section label="Approach" title="How I framed the work.">
@@ -42,6 +56,26 @@ export function CaseStudySections({ project }: { project: Project }) {
           )}
         </div>
       </Reveal>
+
+      {/* Synon: Before / After */}
+      {isSynon && (
+        <Reveal className="container-page mt-8 mb-4">
+          <div className="grid grid-cols-2 gap-8 max-w-[520px]">
+            <div>
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-tertiary block mb-2">Before</span>
+              <p className="text-[14px] text-text-secondary leading-[1.6]">
+                Inconsistent layout, competing hierarchies, four different component libraries.
+              </p>
+            </div>
+            <div>
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-tertiary block mb-2">After</span>
+              <p className="text-[14px] text-text-secondary leading-[1.6]">
+                One spatial grid, unified token system, predictable interface across all verticals.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+      )}
 
       {/* === Key Decisions === */}
       <section className="container-page section-rhythm">
@@ -97,6 +131,15 @@ export function CaseStudySections({ project }: { project: Project }) {
           )}
         </div>
       </Reveal>
+
+      {/* Synon: system intro */}
+      {isSynon && (
+        <Reveal className="container-page mt-10 -mb-4">
+          <p className="text-[14px] text-text-tertiary max-w-[440px] leading-[1.7]">
+            To ensure consistency across 38 screens, I built a token system before touching any component. Every spacing, color, and type decision flows from this layer.
+          </p>
+        </Reveal>
+      )}
 
       {/* === System === */}
       <section className="container-page section-rhythm">
@@ -169,6 +212,17 @@ export function CaseStudySections({ project }: { project: Project }) {
           {project.outcome}
         </p>
       </Section>
+
+      {/* Synon: result statement */}
+      {isSynon && (
+        <Reveal className="container-page -mt-8 mb-8">
+          <div className="border-l-2 border-accent-coral/40 pl-6 max-w-[500px]">
+            <p className="text-[15px] text-text-primary leading-[1.65]">
+              The result is a predictable, unified interface that engineering shipped without a single handoff meeting. Users stopped asking where things went.
+            </p>
+          </div>
+        </Reveal>
+      )}
 
       {/* === Reflection === */}
       <Section label="Reflection" title="What I'd do differently.">
