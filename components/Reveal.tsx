@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import type { Variants, ReactNode, ElementType } from "react";
+import type { Variants } from "framer-motion";
+import type { ReactNode, ElementType } from "react";
 import { fadeUp, viewportOnce, viewportRepeat } from "@/lib/motion";
 
 interface RevealProps {
