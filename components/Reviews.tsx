@@ -42,10 +42,10 @@ export function Reviews() {
         {/* Large review */}
         <Reveal variant={scaleUp}>
           <div className="bg-paper-cream border border-line rounded-2xl p-8 md:p-14 relative overflow-hidden">
-            <span className="font-display text-8xl md:text-9xl text-text-tertiary/30 absolute top-4 left-6 md:top-6 md:left-10 leading-none select-none">
+            <span className="font-display text-6xl md:text-9xl text-text-tertiary/30 absolute top-4 left-6 md:top-6 md:left-10 leading-none select-none">
               &ldquo;
             </span>
-            <div className="relative md:pl-16">
+            <div className="relative pl-4 md:pl-16">
               <p className="type-display-sm italic font-light leading-[1.45] text-text-primary mb-8">
                 {reviews[0].quote}
               </p>
@@ -73,10 +73,10 @@ export function Reviews() {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_320px] gap-6 md:gap-8">
           <Reveal>
             <div className="bg-paper-cream border border-line rounded-2xl p-8 md:p-10 relative h-full">
-              <span className="font-display text-6xl text-text-tertiary/30 absolute top-2 left-4 leading-none select-none">
+              <span className="font-display text-4xl md:text-6xl text-text-tertiary/30 absolute top-2 left-4 leading-none select-none">
                 &ldquo;
               </span>
-              <div className="md:pl-10">
+              <div className="pl-4 md:pl-10">
                 <p className="type-display-sm italic font-light leading-[1.4] mb-8">
                   {reviews[1].quote}
                 </p>
