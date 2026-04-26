@@ -44,9 +44,10 @@ export function Timeline() {
         </Reveal>
         <Reveal variant={fadeRight} delay={0.1} className="flex md:items-end">
           <p className="type-lead text-text-secondary max-w-[460px]">
-            From iGaming operator platforms to SaaS and education.
-            Every engagement ends with a system engineering
-            can build from — not a prototype they have to interpret.
+            I care about making complex products feel simple.
+            From iGaming operator platforms to SaaS and education —
+            every engagement ends with a system engineering
+            can build from, not a prototype they have to interpret.
           </p>
         </Reveal>
       </div>

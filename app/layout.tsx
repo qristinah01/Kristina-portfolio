@@ -50,6 +50,20 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable}`}
     >
       <body>
+        {/* Google Analytics (GA4) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-2BM4NXHN6T"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-2BM4NXHN6T');
+          `}
+        </Script>
+
         {children}
         {/* Crisp chat — uses env var; safe to ship without */}
         {process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID && (

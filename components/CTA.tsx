@@ -2,9 +2,11 @@
 
 import { Reveal } from "./Reveal";
 import { fadeLeft, scaleUp } from "@/lib/motion";
+import { trackEvent } from "@/lib/gtag";
 
 export function CTA() {
   const openChatOrEmail = () => {
+    trackEvent("chat_click", { location: "cta" });
     const crisp = (window as unknown as { $crisp?: unknown[] }).$crisp;
     if (crisp) {
       crisp.push(["do", "chat:open"]);
@@ -82,6 +84,7 @@ export function CTA() {
             </button>
             <a
               href="/resume.pdf"
+              onClick={() => trackEvent("cv_download", { location: "cta" })}
               className="inline-flex items-center gap-2 rounded-full border border-line-dark px-5 py-3 text-body-sm font-medium text-text-onDark transition-all duration-300 ease-out-quart hover:border-text-onDark/40 hover:-translate-y-[1px]"
             >
               Download CV

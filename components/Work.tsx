@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Reveal } from "./Reveal";
 import { fadeLeft, fadeRight, slideFromLeft, slideFromRight } from "@/lib/motion";
 import { projects } from "@/lib/projects";
+import { trackEvent } from "@/lib/gtag";
 
 const featuredWork = [
   {
@@ -69,7 +70,8 @@ export function Work() {
             >
               <Link
                 href={`/projects/${project.slug}`}
-                className="group block"
+                onClick={() => trackEvent("case_study_click", { project: project.slug })}
+                className="group block transition-transform duration-500 ease-out hover:scale-[1.02]"
               >
                 <div className="flex items-center gap-4 mb-6">
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-text-tertiary">
@@ -87,7 +89,7 @@ export function Work() {
                       src={heroImage}
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
                       sizes="(max-width: 768px) 100vw, 1200px"
                       quality={90}
                     />
@@ -98,7 +100,9 @@ export function Work() {
                 <div className={`grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-6 md:gap-16 ${isEven ? "" : "md:direction-rtl"}`}>
                   <div className={isEven ? "" : "md:[direction:ltr]"}>
                     <h3 className="font-display text-3xl md:text-4xl tracking-[-0.02em] leading-[1.1]">
-                      {project.title}
+                      <span className="relative inline-block after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-current after:origin-left after:scale-x-0 after:transition-transform after:duration-500 after:ease-out group-hover:after:scale-x-100">
+                        {project.title}
+                      </span>
                     </h3>
                     <p
                       className="text-base md:text-lg italic font-light text-text-secondary mt-3 leading-snug"

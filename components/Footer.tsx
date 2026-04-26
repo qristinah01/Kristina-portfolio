@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { trackEvent } from "@/lib/gtag";
 
 const navigation = [
   { label: "Home", href: "/" },
@@ -21,7 +24,7 @@ const elsewhere = [
   },
 ];
 
-const docs = [{ label: "Resume (PDF)", href: "/resume.pdf", external: false }];
+const docs = [{ label: "Resume (PDF)", href: "/resume.pdf", external: false, track: "cv_download" as const }];
 
 export function Footer() {
   return (
@@ -64,7 +67,7 @@ export function Footer() {
   );
 }
 
-type Item = { label: string; href: string; external?: boolean };
+type Item = { label: string; href: string; external?: boolean; track?: string };
 
 function FooterCol({ label, items }: { label: string; items: Item[] }) {
   return (
@@ -78,6 +81,7 @@ function FooterCol({ label, items }: { label: string; items: Item[] }) {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={item.track ? () => trackEvent(item.track!, { location: "footer" }) : undefined}
                 className="text-body-sm text-text-onDark hover:text-accent-coral transition-colors duration-180"
               >
                 {item.label}
@@ -85,6 +89,7 @@ function FooterCol({ label, items }: { label: string; items: Item[] }) {
             ) : (
               <Link
                 href={item.href}
+                onClick={item.track ? () => trackEvent(item.track!, { location: "footer" }) : undefined}
                 className="text-body-sm text-text-onDark hover:text-accent-coral transition-colors duration-180"
               >
                 {item.label}

@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { easeOutExpo } from "@/lib/motion";
+import { trackEvent } from "@/lib/gtag";
 
 export function Hero() {
   const reduce = useReducedMotion();
   const { scrollY } = useScroll();
 
   const imageY = useTransform(scrollY, [0, 600], [0, -80]);
+  const imageScale = useTransform(scrollY, [0, 600], [1, 1.05]);
   const contentY = useTransform(scrollY, [0, 400], [0, 40]);
   const contentOpacity = useTransform(scrollY, [0, 400], [1, 0]);
 
@@ -16,8 +18,8 @@ export function Hero() {
     reduce
       ? {}
       : {
-          initial: { opacity: 0, y: 24 },
-          animate: { opacity: 1, y: 0 },
+          initial: { opacity: 0, y: 24, filter: "blur(4px)" },
+          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
           transition: { duration: 1, delay, ease: easeOutExpo },
         };
 
@@ -27,7 +29,10 @@ export function Hero() {
       {/* Aggressively cropped: pushed right and up, face partially off-frame on desktop */}
       <motion.div
         className="absolute inset-0 z-0"
-        style={reduce ? {} : { y: imageY }}
+        style={reduce ? {} : { y: imageY, scale: imageScale }}
+        initial={reduce ? undefined : { scale: 1.08 }}
+        animate={reduce ? undefined : { scale: 1 }}
+        transition={{ duration: 1.8, ease: easeOutExpo }}
       >
         <div className="absolute top-0 bottom-0 right-0 w-[70%] md:w-[55%]">
           <Image
@@ -103,6 +108,7 @@ export function Hero() {
             </a>
             <button
               onClick={() => {
+                trackEvent("chat_click", { location: "hero" });
                 const crisp = (window as unknown as { $crisp?: unknown[] }).$crisp;
                 if (crisp) crisp.push(["do", "chat:open"]);
               }}
