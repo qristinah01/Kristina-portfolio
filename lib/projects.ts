@@ -2,6 +2,9 @@ export type Project = {
   slug: string;
   number: string;
   title: string;
+  category: string;     // e.g. "iGaming · Platform Redesign"
+  tagline: string;      // short outcome description
+  description: string;  // longer outcome line
   tag: string;
   year: string;
   meta: string;         // eyebrow text like "iGaming · Platform redesign · 2026"
@@ -10,7 +13,7 @@ export type Project = {
   cardBg: string;       // Tailwind bg class for card
   cardAccent?: string;  // optional accent color
   screens?: string;     // e.g. "38 screens"
-  featured?: boolean;
+  featured: boolean;
   heroImage?: string;   // path to hero image in /public
   caseImages?: {
     flows?: string;
@@ -41,6 +44,9 @@ export const projects: Project[] = [
     slug: "synon",
     number: "01",
     title: "Synon Labs",
+    category: "iGaming · Platform Redesign",
+    tagline: "Fragmented UX → unified product system",
+    description: "Four verticals with four design languages became one system. 38 production screens, one spatial grid, zero kickoff meetings with engineering.",
     tag: "★ Featured",
     year: "2026",
     meta: "iGaming · Platform redesign · 2026",
@@ -103,10 +109,14 @@ export const projects: Project[] = [
     slug: "halo",
     number: "02",
     title: "Halo",
+    category: "E-commerce · Brand + Landing",
+    tagline: "Premium audio brand repositioned around buyer intent",
+    description: "Premium audio brand repositioned around buyer intent — specs moved below fold, conversions up.",
     tag: "Brand + product",
     year: "2025",
     meta: "E-commerce · Brand + landing · 2025",
     screens: "10 sections",
+    featured: false,
     cardSize: "large",
     cardBg: "bg-paper-sand",
     heroImage: "/images/halo-hero2.png",
@@ -163,10 +173,14 @@ export const projects: Project[] = [
     slug: "safeguest",
     number: "03",
     title: "SafeGuest.ai",
+    category: "SaaS · Concierge Platform",
+    tagline: "Weak presentation → clear, conversion-focused design",
+    description: "Replaced scattered WhatsApp threads and PDF house rules with one calm interface. Three investor meetings ended with 'send me the Figma.'",
     tag: "SaaS Concept",
     year: "2025",
     meta: "SaaS · Concierge concept · 2025",
     screens: "14 screens",
+    featured: true,
     cardSize: "large",
     cardBg: "bg-paper-cream",
     heroImage: "/images/safeguest-hero.png",
@@ -223,10 +237,14 @@ export const projects: Project[] = [
     slug: "betpilot",
     number: "04",
     title: "BetPilot",
+    category: "iGaming · UX Case Study",
+    tagline: "A decision interface for serious bettors",
+    description: "A decision interface for serious bettors — less noise, faster scan, no side spreadsheets.",
     tag: "iGaming",
     year: "2025",
     meta: "iGaming · UX Case Study · 2025",
     screens: "Shipped",
+    featured: false,
     cardSize: "large",
     cardBg: "bg-accent-purple",
     heroImage: "/images/bet-pilot-hero.png",
@@ -283,10 +301,14 @@ export const projects: Project[] = [
     slug: "tlg",
     number: "05",
     title: "The Learning Galaxy",
+    category: "Education · Client Work",
+    tagline: "Lack of trust → structured, premium experience",
+    description: "Parents bounced at the hero. Kids never saw the product. Redesigned the sales sequence — trust for parents first, play for kids second.",
     tag: "Education",
     year: "2025",
     meta: "Education · Client work · 2025",
     screens: "Shipped",
+    featured: true,
     cardSize: "large",
     cardBg: "bg-accent-purple",
     heroImage: "/images/tgl-hero.png",

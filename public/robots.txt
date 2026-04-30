@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kristina-portfolio-oaom.vercel.app/sitemap.xml

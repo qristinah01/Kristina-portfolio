@@ -7,24 +7,9 @@ import { projects } from "@/lib/projects";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "More Work — Kristina Hakobyan",
-  description: "Additional product and visual explorations.",
+  title: "Work — Kristina Hakobyan",
+  description: "Product design case studies — platforms, SaaS, e-commerce, and more.",
 };
-
-const moreWork = [
-  {
-    slug: "betpilot",
-    context: "iGaming · UX Case Study",
-    title: "BetPilot",
-    description: "A decision interface for serious bettors — less noise, faster scan, no side spreadsheets.",
-  },
-  {
-    slug: "halo",
-    context: "E-commerce · Brand + Landing",
-    title: "Halo",
-    description: "Premium audio brand repositioned around buyer intent — specs moved below fold, conversions up.",
-  },
-];
 
 export default function WorkPage() {
   return (
@@ -35,7 +20,7 @@ export default function WorkPage() {
           {/* Breadcrumb */}
           <Reveal className="mb-10 md:mb-14">
             <Link
-              href="/#work"
+              href="/"
               className="meta-label hover:text-text-primary transition-colors duration-180"
             >
               ← Back to home
@@ -45,60 +30,55 @@ export default function WorkPage() {
           {/* Header */}
           <Reveal>
             <h1 className="type-display-xl max-w-[600px]">
-              More work<span className="text-text-tertiary">.</span>
+              Work<span className="text-text-tertiary">.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="type-lead text-text-secondary max-w-prose-tight mt-6">
-              Additional product and visual explorations.
+              Case studies from platforms, SaaS products, and brand launches.
             </p>
           </Reveal>
 
           {/* Projects */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 mt-16 md:mt-20">
-            {moreWork.map((project, i) => {
-              const full = projects.find((p) => p.slug === project.slug);
-              const heroImage = full?.heroImage;
-
-              return (
-                <Reveal key={project.slug} delay={i * 0.08}>
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="group block"
-                  >
-                    {heroImage && (
-                      <div className="relative aspect-[16/10] overflow-hidden rounded-[4px] mb-5">
-                        <Image
-                          src={heroImage}
-                          alt={project.title}
-                          fill
-                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                          sizes="(max-width: 768px) 100vw, 580px"
-                          quality={85}
-                        />
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-text-tertiary">
-                        {project.context}
-                      </span>
+            {projects.map((project, i) => (
+              <Reveal key={project.slug} delay={i * 0.08}>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="group block"
+                >
+                  {project.heroImage && (
+                    <div className="relative aspect-[16/10] overflow-hidden rounded-[4px] mb-5">
+                      <Image
+                        src={project.heroImage}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                        sizes="(max-width: 768px) 100vw, 580px"
+                        quality={85}
+                      />
                     </div>
+                  )}
 
-                    <h2 className="font-display text-xl md:text-2xl tracking-[-0.01em] leading-[1.15] mb-2">
-                      {project.title}
-                    </h2>
-                    <p className="text-[14px] text-text-secondary leading-[1.6] max-w-[400px]">
-                      {project.description}
-                    </p>
-                    <span className="inline-flex items-center gap-2 mt-4 text-[13px] font-medium text-text-primary transition-all duration-300 group-hover:gap-3">
-                      View case study
-                      <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-text-tertiary">
+                      {project.category}
                     </span>
-                  </Link>
-                </Reveal>
-              );
-            })}
+                  </div>
+
+                  <h2 className="font-display text-xl md:text-2xl tracking-[-0.01em] leading-[1.15] mb-2">
+                    {project.title}
+                  </h2>
+                  <p className="text-[14px] text-text-secondary leading-[1.6] max-w-[400px]">
+                    {project.description}
+                  </p>
+                  <span className="inline-flex items-center gap-2 mt-4 text-[13px] font-medium text-text-primary transition-all duration-300 group-hover:gap-3">
+                    View case study
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </section>
       </main>

@@ -116,3 +116,45 @@ export const viewportOnce = {
   once: true,
   margin: "-10% 0px -10% 0px",
 };
+
+// ---- Hero letter-by-letter reveal ----
+export const heroLetterContainer: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.03, delayChildren: 0.1 },
+  },
+};
+
+export const heroLetterReveal: Variants = {
+  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
+};
+
+// ---- Image parallax (scroll-linked via useTransform) ----
+export const imageParallax = {
+  /** Suggested useTransform ranges for hero images */
+  y: { input: [0, 600], output: [0, -80] },
+  scale: { input: [0, 600], output: [1, 1.06] },
+};
+
+// ---- Page transition (enter / exit) ----
+export const pageTransition: Variants = {
+  initial: { opacity: 0, y: 12, filter: "blur(4px)" },
+  enter: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.5, ease: easeOutExpo },
+  },
+  exit: {
+    opacity: 0,
+    y: -8,
+    filter: "blur(4px)",
+    transition: { duration: 0.3, ease: easeOutQuart },
+  },
+};

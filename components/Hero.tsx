@@ -1,138 +1,204 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { easeOutExpo } from "@/lib/motion";
 import { trackEvent } from "@/lib/gtag";
 
+/* ─── Word-reveal variants ─── */
+const headlineStagger: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.06, delayChildren: 0.15 },
+  },
+};
+
+const wordReveal: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+const accentWordReveal: Variants = {
+  hidden: { opacity: 0, y: 24, color: "rgba(245,242,236,0.35)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    color: "#D66A4C",
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+      color: { duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] },
+    },
+  },
+};
+
+/* ─── CTA stagger ─── */
+const ctaContainer: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.08, delayChildren: 1.2 },
+  },
+};
+
+const ctaReveal: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+/* ─── Word helper ─── */
+function WordSpan({
+  word,
+  variant,
+}: {
+  word: string;
+  variant: Variants;
+}) {
+  return (
+    <motion.span className="inline-block" variants={variant}>
+      {word}
+    </motion.span>
+  );
+}
+
+/* ─── Hero ─── */
 export function Hero() {
   const reduce = useReducedMotion();
-  const { scrollY } = useScroll();
 
-  const imageY = useTransform(scrollY, [0, 600], [0, -80]);
-  const imageScale = useTransform(scrollY, [0, 600], [1, 1.05]);
-  const contentY = useTransform(scrollY, [0, 400], [0, 40]);
-  const contentOpacity = useTransform(scrollY, [0, 400], [1, 0]);
-
-  const anim = (delay: number) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24, filter: "blur(4px)" },
-          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-          transition: { duration: 1, delay, ease: easeOutExpo },
-        };
+  const initial = reduce ? false : ("hidden" as const);
 
   return (
-    <section id="hero" className="relative h-[100svh] overflow-hidden">
-      {/* ── Image ── */}
-      {/* Aggressively cropped: pushed right and up, face partially off-frame on desktop */}
-      <motion.div
-        className="absolute inset-0 z-0"
-        style={reduce ? {} : { y: imageY, scale: imageScale }}
-        initial={reduce ? undefined : { scale: 1.08 }}
-        animate={reduce ? undefined : { scale: 1 }}
-        transition={{ duration: 1.8, ease: easeOutExpo }}
-      >
-        <div className="absolute top-0 bottom-0 right-0 w-[70%] md:w-[55%]">
-          <Image
-            src="/images/avatar.jpg"
-            alt=""
-            fill
-            className="object-cover object-[60%_30%]"
-            priority
-            quality={100}
-            sizes="100vw"
-          />
-        </div>
+    <section id="hero" className="relative overflow-hidden bg-ink">
+      {/* ── Ambient glow ── */}
+      <div
+        className="absolute top-[5%] right-[-8%] w-[55%] h-[80%] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 60% 40%, rgba(214,106,76,0.06) 0%, transparent 65%)",
+        }}
+      />
 
-        {/* Cinematic overlays */}
-        {/* Left fade — text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#111014]/90 via-[#111014]/50 to-transparent" />
-        {/* Bottom fade — grounding */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#111014]/80 via-transparent to-[#111014]/20" />
-        {/* Subtle vignette */}
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 70% 30%, transparent 40%, rgba(17,16,20,0.4) 100%)" }} />
-      </motion.div>
-
-      {/* ── Content ── */}
-      <motion.div
-        className="relative z-10 container-page flex flex-col justify-end h-full pb-14 md:pb-20 xl:pb-24"
-        style={reduce ? {} : { y: contentY, opacity: contentOpacity }}
-      >
-        {/* Name — small, quiet, editorial */}
-        <motion.div {...anim(0)} className="mb-auto pt-28 md:pt-36">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-text-onDark/35 font-mono">
-            Kristina Hakobyan — Product Designer
+      <div className="relative z-10 container-page pt-16 pb-16 lg:pt-[120px] lg:pb-[120px]">
+        {/* ── Eyebrow ── */}
+        <motion.div
+          className="pt-16 md:pt-20 lg:pt-0 mb-10 lg:mb-0"
+          initial={reduce ? false : { opacity: 0, y: 28, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.1, ease: easeOutExpo }}
+        >
+          <span className="text-[11px] uppercase tracking-[0.22em] text-text-onDark/25 font-mono">
+            Qristine Hakobyan — Product Designer
           </span>
         </motion.div>
 
-        {/* Headline block — offset left, max tension with image on right */}
-        <div className="max-w-[600px] xl:max-w-[660px]">
-          <motion.h1
-            {...anim(0.1)}
-            className="font-display text-[clamp(2.4rem,5.8vw,4.5rem)] leading-[1.04] tracking-[-0.035em] text-text-onDark"
-          >
-            I design the systems
-            <br />
-            products{" "}
-            <em
-              className="not-italic font-light"
-
-              style={{ fontFamily: "var(--font-fraunces)", fontStyle: "italic" }}
-            >
-              actually ship with.
-            </em>
-          </motion.h1>
-
-          <motion.p
-            {...anim(0.2)}
-            className="text-[14px] md:text-[15px] text-text-onDark/45 max-w-[380px] mt-6 leading-[1.7]"
-          >
-            iGaming platforms, SaaS tools, education products.
-            From architecture to production — built for engineers,
-            not portfolios.
-          </motion.p>
-
-          {/* CTAs */}
+        {/* ── Two-column stage ── */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:gap-24">
+          {/* Portrait — shows first on mobile, right column on desktop */}
           <motion.div
-            {...anim(0.3)}
-            className="flex items-center gap-6 mt-10"
+            className="order-first lg:order-last lg:w-[40%] xl:w-[42%] flex-shrink-0 mb-12 lg:mb-0"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, delay: 0.2, ease: easeOutExpo }}
           >
-            <a
-              href="#work"
-              className="group inline-flex items-center gap-2 bg-paper/95 text-ink pl-6 pr-5 py-3 rounded-full text-[13px] font-medium tracking-[0.005em] backdrop-blur-sm transition-all duration-500 ease-out hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.4)]"
-            >
-              Case studies
-              <span className="w-5 h-5 rounded-full bg-ink/10 inline-flex items-center justify-center text-[11px] transition-transform duration-500 group-hover:translate-y-0.5">↓</span>
-            </a>
-            <button
-              onClick={() => {
-                trackEvent("chat_click", { location: "hero" });
-                const crisp = (window as unknown as { $crisp?: unknown[] }).$crisp;
-                if (crisp) crisp.push(["do", "chat:open"]);
-              }}
-              className="group text-[13px] text-text-onDark/50 font-medium tracking-[0.005em] transition-colors duration-300 hover:text-text-onDark/90"
-            >
-              Let's chat
-              <span className="inline-block ml-1.5 transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </button>
+            <div className="mx-auto lg:mx-0 max-w-[280px] sm:max-w-[320px] lg:max-w-none">
+              {/* NOTE: If avatar.jpg is too low-res for this size, swap with a higher-res portrait */}
+              <Image
+                src="/images/avatar.jpg"
+                alt="Kristina Hakobyan, Product Designer"
+                width={560}
+                height={700}
+                priority
+                className="w-full h-auto rounded-lg object-cover"
+                style={{ aspectRatio: "4 / 5" }}
+                sizes="(max-width: 1023px) 320px, 42vw"
+              />
+            </div>
           </motion.div>
-        </div>
 
-        {/* Scroll line */}
-        <motion.div
-          {...anim(0.6)}
-          className="hidden md:block absolute bottom-20 xl:bottom-24 right-12 xl:right-16"
-        >
-          <div className="flex flex-col items-center gap-3">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-text-onDark/20 font-mono [writing-mode:vertical-lr]">
-              Scroll
-            </span>
-            <span className="w-px h-10 bg-gradient-to-b from-text-onDark/20 to-transparent" />
+          {/* Left — copy block */}
+          <div className="lg:w-[58%] xl:w-[56%]">
+            {/* ── Headline — word-by-word stagger ── */}
+            <motion.h1
+              className="font-display text-[clamp(2.5rem,6.5vw,5.2rem)] leading-[0.96] tracking-[-0.04em] text-text-onDark"
+              variants={headlineStagger}
+              initial={initial}
+              animate="show"
+            >
+              {/* Line 1 */}
+              <WordSpan word="I" variant={wordReveal} />{" "}
+              <WordSpan word="design" variant={wordReveal} />{" "}
+              <WordSpan word="the" variant={wordReveal} />
+              <br />
+              {/* Line 2 */}
+              <WordSpan word="systems" variant={wordReveal} />{" "}
+              <WordSpan word="products" variant={wordReveal} />
+              <br />
+              {/* Line 3 — italic with accent color shift */}
+              <em
+                className="not-italic font-light"
+                style={{
+                  fontFamily: "var(--font-fraunces)",
+                  fontStyle: "italic",
+                }}
+              >
+                <WordSpan word="actually" variant={accentWordReveal} />{" "}
+                <WordSpan word="ship" variant={accentWordReveal} />{" "}
+                <WordSpan word="with." variant={accentWordReveal} />
+              </em>
+            </motion.h1>
+
+            {/* ── Subhead ── */}
+            <motion.p
+              className="text-[14px] md:text-[15px] text-text-onDark/35 max-w-[420px] mt-8 md:mt-10 leading-[1.8] tracking-[0.005em]"
+              initial={reduce ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.0, ease: easeOutExpo }}
+            >
+              Product designer working across iGaming, SaaS, and education. I
+              focus on reducing friction, building scalable systems, and shipping
+              work engineering can build from.
+            </motion.p>
+
+            {/* ── CTAs — staggered fade-up ── */}
+            <motion.div
+              className="flex items-center gap-5 mt-10 md:mt-12"
+              variants={ctaContainer}
+              initial={initial}
+              animate="show"
+            >
+              <motion.a
+                href="#work"
+                variants={ctaReveal}
+                className="group inline-flex items-center gap-2.5 rounded-full pl-6 pr-5 py-3 text-[13px] font-medium tracking-[0.01em] text-text-onDark/85 border border-text-onDark/[0.1] bg-text-onDark/[0.04] backdrop-blur-sm transition-all duration-500 ease-out hover:bg-text-onDark/[0.1] hover:border-text-onDark/[0.18] hover:-translate-y-px hover:shadow-[0_8px_30px_-10px_rgba(245,242,236,0.08)]"
+              >
+                View case studies
+                <span className="w-5 h-5 rounded-full bg-text-onDark/[0.06] inline-flex items-center justify-center text-[11px] text-text-onDark/60 transition-all duration-500 group-hover:bg-text-onDark/[0.1] group-hover:translate-y-0.5">
+                  ↓
+                </span>
+              </motion.a>
+              <motion.a
+                variants={ctaReveal}
+                href="#cta"
+                onClick={() => trackEvent("contact_click", { location: "hero" })}
+                className="group text-[13px] text-text-onDark/35 font-medium tracking-[0.01em] transition-all duration-300 hover:text-text-onDark/70"
+              >
+                Let&apos;s chat
+                <span className="inline-block ml-1.5 transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </motion.a>
+            </motion.div>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

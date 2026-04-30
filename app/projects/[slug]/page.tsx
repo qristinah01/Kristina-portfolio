@@ -5,6 +5,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { CaseStudySections } from "@/components/CaseStudySections";
+import { SynonCaseStudy } from "@/components/SynonCaseStudy";
 import { getProject, getProjectNav, projects } from "@/lib/projects";
 import type { Metadata } from "next";
 
@@ -31,6 +32,20 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
   const { prev, next } = getProjectNav(params.slug);
 
+  /* ── Synon gets a dedicated narrative case study ── */
+  if (project.slug === "synon") {
+    return (
+      <>
+        <Nav />
+        <main className="pt-20 md:pt-24">
+          <SynonCaseStudy />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
+  /* ── Generic case study layout for all other projects ── */
   return (
     <>
       <Nav />
@@ -39,7 +54,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         <section className="container-page pt-12 md:pt-20 pb-12 md:pb-16">
           <Reveal className="flex items-center gap-3 mb-10 md:mb-14">
             <Link
-              href="/#work"
+              href="/work"
               className="meta-label hover:text-text-primary transition-colors duration-180"
             >
               ← All work

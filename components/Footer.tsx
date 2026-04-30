@@ -34,10 +34,10 @@ export function Footer() {
           {/* Brand column */}
           <div className="flex flex-col gap-4">
             <Link href="/" className="font-display text-5xl leading-none">
-              kh<span className="text-accent-coral">.</span>
+              qh<span className="text-accent-coral">.</span>
             </Link>
             <div className="text-body-sm text-text-onDarkDim leading-relaxed">
-              Kristina Hakobyan
+              Qristine Hakobyan
               <br />
               Product Designer
               <br />
@@ -52,7 +52,7 @@ export function Footer() {
 
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pt-8 border-t border-line-dark">
           <span className="meta-label text-text-onDarkDim normal-case tracking-[0.1em]">
-            © 2026 Kristina Hakobyan. Designed in Figma. Built with care in
+            © 2026 Qristine Hakobyan. Designed in Figma. Built with care in
             Yerevan.
           </span>
           <a

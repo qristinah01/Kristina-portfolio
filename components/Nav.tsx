@@ -6,7 +6,6 @@ import Link from "next/link";
 const links = [
   { label: "Work", href: "/work" },
   { label: "About", href: "/#about" },
-  { label: "Approach", href: "/#approach" },
   { label: "Contact", href: "/#cta" },
 ];
 
@@ -31,9 +30,11 @@ export function Nav() {
       <div className="container-page flex h-16 md:h-20 items-center justify-between">
         <Link
           href="/"
-          className="font-display text-2xl leading-none tracking-tight"
+          className={`font-display text-2xl leading-none tracking-tight transition-colors duration-300 ${
+            scrolled ? "text-text-primary" : "text-text-onDark"
+          }`}
         >
-          kh<span className="text-accent-coral">.</span>
+          qh<span className="text-accent-coral">.</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-8">
@@ -41,7 +42,11 @@ export function Nav() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-body-sm text-text-secondary hover:text-text-primary transition-colors duration-200"
+              className={`text-body-sm transition-colors duration-200 ${
+                scrolled
+                  ? "text-text-secondary hover:text-text-primary"
+                  : "text-text-onDark/60 hover:text-text-onDark"
+              }`}
             >
               {l.label}
             </Link>
@@ -51,7 +56,11 @@ export function Nav() {
         {/* Mobile: no menu for now, logo + current state is enough */}
         <Link
           href="/#cta"
-          className="md:hidden text-body-sm text-text-secondary hover:text-text-primary"
+          className={`md:hidden text-body-sm transition-colors duration-200 ${
+            scrolled
+              ? "text-text-secondary hover:text-text-primary"
+              : "text-text-onDark/60 hover:text-text-onDark"
+          }`}
         >
           Contact
         </Link>

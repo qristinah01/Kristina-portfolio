@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { PageTransitionProvider } from "@/components/transitions/PageTransition";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -25,17 +27,34 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
+const siteUrl = "https://kristina-portfolio-oaom.vercel.app";
+const title = "Kristina Hakobyan — Product Designer";
+const description =
+  "Product designer focused on building clear, structured interfaces and simplifying complex systems.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kristina.design"),
-  title: "Kristina Hakobyan — Product Designer",
-  description:
-    "Multi-surface product design for iGaming, SaaS, and education. I design systems from first wireframe to developer handoff — built for real constraints, not showreels.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
   openGraph: {
-    title: "Kristina Hakobyan — Product Designer",
-    description:
-      "Multi-surface product design for iGaming, SaaS, and education.",
+    title,
+    description,
+    url: siteUrl,
+    siteName: title,
     type: "website",
     locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: siteUrl,
   },
 };
 
@@ -50,6 +69,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable}`}
     >
       <body>
+        <SmoothScroll>
         {/* Google Analytics (GA4) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-2BM4NXHN6T"
@@ -64,23 +84,10 @@ export default function RootLayout({
           `}
         </Script>
 
-        {children}
-        {/* Crisp chat — uses env var; safe to ship without */}
-        {process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID && (
-          <Script id="crisp-chat" strategy="afterInteractive">
-            {`
-              window.$crisp = [];
-              window.CRISP_WEBSITE_ID = "${process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID}";
-              (function(){
-                var d = document; var s = d.createElement("script");
-                s.src = "https://client.crisp.chat/l.js"; s.async = 1;
-                d.getElementsByTagName("head")[0].appendChild(s);
-              })();
-              window.$crisp.push(["set", "message:text", ["Have a project in mind? Feel free to message me."]]);
-              window.$crisp.push(["safe", true]);
-            `}
-          </Script>
-        )}
+        <PageTransitionProvider>
+          {children}
+        </PageTransitionProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

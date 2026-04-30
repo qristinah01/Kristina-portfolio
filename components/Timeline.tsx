@@ -1,7 +1,11 @@
 "use client";
 
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import type { Variants } from "framer-motion";
+import { useRef } from "react";
+import { easeOutExpo, viewportOnce } from "@/lib/motion";
 import { Reveal } from "./Reveal";
-import { fadeLeft, fadeRight } from "@/lib/motion";
+import { fadeRight } from "@/lib/motion";
 
 const phases = [
   {
@@ -22,7 +26,7 @@ const phases = [
   },
   {
     period: "2025 — now",
-    stage: "CURRENT",
+    stage: "NOW",
     title: "Focused Practice",
     role: "Systems & product",
     body: "Fewer clients, deeper work. Multi-surface design systems, brand strategy, production-ready handoff. Every project ships with documentation engineering can build from.",
@@ -30,20 +34,94 @@ const phases = [
   },
 ];
 
+/* ── Entry stagger ── */
+const entryContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const entryReveal: Variants = {
+  hidden: { opacity: 0, x: -20 },
+  show: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: easeOutExpo },
+  },
+};
+
+/* ── Section heading ── */
+const eyebrowReveal: Variants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5, ease: easeOutExpo },
+  },
+};
+
+const headingReveal: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: 0.15, ease: easeOutExpo },
+  },
+};
+
+/* ── Timeline line draw sub-component ── */
+function TimelineLine() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 80%", "end 60%"],
+  });
+  const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
+    <div ref={ref} className="hidden md:block absolute top-[56px] left-0 right-0 h-px mt-[-12px] overflow-visible">
+      {/* Background track */}
+      <div className="absolute inset-0 bg-line" />
+      {/* Animated fill */}
+      <motion.div
+        className="absolute inset-0 bg-text-primary origin-left"
+        style={{ scaleX: scaleY }}
+      />
+    </div>
+  );
+}
+
 export function Timeline() {
+  const reduce = useReducedMotion();
+
   return (
     <section id="about" className="container-page py-24 md:py-32 xl:py-40">
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-8 md:gap-16 mb-16 md:mb-24">
-        <Reveal variant={fadeLeft} className="flex flex-col gap-3">
-          <span className="eyebrow">03 — About</span>
-          <h2 className="type-display-lg">
+      {/* ── Section header ── */}
+      <div className="mb-16 md:mb-24">
+        <div className="flex flex-col gap-3 mb-8">
+          <motion.span
+            className="eyebrow"
+            variants={eyebrowReveal}
+            initial={reduce ? false : "hidden"}
+            whileInView="show"
+            viewport={viewportOnce}
+          >
+            03 — About
+          </motion.span>
+          <motion.h2
+            className="type-display-lg"
+            variants={headingReveal}
+            initial={reduce ? false : "hidden"}
+            whileInView="show"
+            viewport={viewportOnce}
+          >
             Three years of
             <br />
             <span className="italic font-light">product work.</span>
-          </h2>
-        </Reveal>
-        <Reveal variant={fadeRight} delay={0.1} className="flex md:items-end">
-          <p className="type-lead text-text-secondary max-w-[460px]">
+          </motion.h2>
+        </div>
+
+        <Reveal variant={fadeRight} delay={0.1}>
+          <p className="type-lead text-text-secondary max-w-[640px]">
             I care about making complex products feel simple.
             From iGaming operator platforms to SaaS and education —
             every engagement ends with a system engineering
@@ -54,19 +132,23 @@ export function Timeline() {
 
       {/* Timeline rail */}
       <div className="relative">
-        <div className="hidden md:block absolute top-[56px] left-0 right-0 h-px bg-line mt-[-12px]" />
+        {reduce ? (
+          <div className="hidden md:block absolute top-[56px] left-0 right-0 h-px bg-line mt-[-12px]" />
+        ) : (
+          <TimelineLine />
+        )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-          {phases.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.1} className="relative">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8"
+          variants={reduce ? undefined : entryContainer}
+          initial={reduce ? undefined : "hidden"}
+          whileInView={reduce ? undefined : "show"}
+          viewport={viewportOnce}
+        >
+          {phases.map((p) => (
+            <motion.div key={p.title} className="relative" variants={entryReveal}>
               <div className="flex items-center justify-between mb-4 md:mb-0">
                 <span className="meta-label">{p.stage}</span>
-                {p.status === "current" && (
-                  <span className="md:hidden inline-flex items-center gap-2 rounded-full bg-accent-coral/10 text-accent-coral px-2 py-0.5 text-meta uppercase">
-                    <span className="h-1.5 w-1.5 rounded-full bg-accent-coral" />
-                    Now
-                  </span>
-                )}
               </div>
 
               <div className="hidden md:flex items-center mb-6 relative">
@@ -91,9 +173,9 @@ export function Timeline() {
               <p className="text-body-sm text-text-secondary leading-relaxed mt-4 max-w-[340px]">
                 {p.body}
               </p>
-            </Reveal>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
